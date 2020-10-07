@@ -10,6 +10,19 @@
 #include <iostream>
 #include <string>
 
+/**
+ * Trouve le plus grand diviseur commun de a et b avec l'algorithme d'Euclide.
+ *
+ * \param[in] a un entier
+ * \param[in] b un autre entier
+ *
+ * \return un entier, le plus grand commun diviseur de a et b.
+ *
+ * \precondition a et b ne peuvent être simultanément 0
+ *
+ * \exception une assertion si a et b sont simultanément nuls.
+ */
+
 long Rationnel::pgdc(long a, long b)
 {
 	// On ne s'occupe que des nombres positifs
@@ -24,6 +37,7 @@ long Rationnel::pgdc(long a, long b)
     if (a == 0) return b;
 
     // Ordonner les deux nombres
+
     if (b > a)
     {
     	long temp = a;
@@ -42,6 +56,18 @@ long Rationnel::pgdc(long a, long b)
     }
     return b;
 }
+
+/**
+ * Constructeur membre à membre
+ * Initialise le nombre rationnel à-partir de deux entier: numérateur et dénominateur
+ *
+ * \param[in] num le numérateur
+ * \param[in] denom le dénominateur
+ *
+ * \precondition denom != 0
+ * \exception assertion si le dénominateur est nul ou le nombre résultant n'est pas irréductible
+ * \postcondition un rationnel doit être irréductible, le pgdc du numérateur et dénominateur doit être 1.
+ */
 
 Rationnel::Rationnel(long num, long denom) : numerateur(num), denominateur(denom)
 {
@@ -63,48 +89,111 @@ Rationnel::Rationnel(long num, long denom) : numerateur(num), denominateur(denom
 	assert(pgdc(numerateur, denominateur) == 1);
 }
 
+/**
+ * Constructeur à partir d'un entier
+ * Crée le nombre num/1
+ * Vu que le dénominateur est automatiquement 1, la pré et postcondition sont
+ * automatiquement satisfaites.
+ *
+ * \param[in] num le numérateur
+ *
+ */
+
 Rationnel::Rationnel(long num) : numerateur(num), denominateur(1) {};
+
+/**
+ * Opérateurs arithmétiques
+ */
+
+/**
+ * + unaire
+ *
+ * \param l'objet rationnel
+ * \return le même objet inchangé
+ */
 
 Rationnel& Rationnel::operator+ ()
 {
 	return *this;
 }
 
+/**
+ * - unaire
+ *
+ * \param objet rationnel
+ * \return le complément de l'objet (objet + (-objet)) == 0
+ */
+
 Rationnel  Rationnel::operator- ()
 {
 	return Rationnel(-numerateur, denominateur);
 }
 
+/**
+ * + binaire : Addition arithmétique de deux rationnels
+ */
 Rationnel  Rationnel::operator+ (const Rationnel& r) const
 {
 	return Rationnel(numerateur * r.denominateur + r.numerateur * denominateur, r.denominateur * denominateur);
 }
 
+/**
+ * - binaire : Soustraction arithmétique de deux rationnels
+ */
 Rationnel  Rationnel::operator- (const Rationnel& r) const
 {
 	return Rationnel(numerateur * r.denominateur - r.numerateur * denominateur, r.denominateur * denominateur);
 }
 
+/**
+ * * binaire : multiplication arithmétique de deux rationnels
+ */
 Rationnel  Rationnel::operator* (const Rationnel& r)
 {
 	return Rationnel(r.numerateur * numerateur, r.denominateur * denominateur);
 }
 
+/**
+ *  division arithmétique de deux rationnels.  Le diviseur ne peut être nul!
+ *
+ *  \precondition Diviseur non-nul
+ *  \exception assertion si diviseur == 0
+ */
 Rationnel  Rationnel::operator/ (const Rationnel& r)
 {
 	assert(r.numerateur != 0);
 	return Rationnel(numerateur * r.denominateur, denominateur * r.numerateur);
 }
 
+/**
+ * Opérateurs relationnels
+ */
+
+/**
+ * Égalité: si les numérateurs et dénominateurs sont égaux.  Dans notre cas ceci n'est pas ambigu car
+ * le rationnel est toujours irréductible.
+ *
+ */
 bool  Rationnel::operator== (const Rationnel& r) const
 {
 	return r.numerateur == numerateur and r.denominateur == denominateur;
 }
 
+/**
+ * Inégalité retourne not ==
+ */
 bool Rationnel::operator!= (const Rationnel& r) const
 {
 	return !(r == (*this));
 }
+
+/**
+ * Méthodes et opérateurs d'IO
+ */
+
+/**
+ * Retourne une représentation textuelle du Rationnel
+ */
 
 std::string Rationnel::formatter() const
 {
@@ -123,6 +212,9 @@ std::string Rationnel::formatter() const
 	return affichage;
 }
 
+/**
+ * Opérateur de redirection dans un flux
+ */
 std::ostream& operator<< (std::ostream& os, const Rationnel& r)
 {
 	os << r.formatter();

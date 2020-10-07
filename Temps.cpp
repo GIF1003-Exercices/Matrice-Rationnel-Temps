@@ -302,7 +302,7 @@ void Temps::tic()
 /****************************************************************************//**
  * \fn formatter
  *
- * \brief Génère une chaîne de caractères à partir d'un objet Temps
+ * \brief Génère une chaîne de caractères à partir d'un objet Temps au format 24h
  *
  * La chaîne contient les champs heure minute et seconde séparés par un caractère.
  *
@@ -320,6 +320,15 @@ std::string Temps::formatter(const std::string separateur) const
 	return texte;
 }
 
+/****************************************************************************//**
+ * \fn formatter12
+ *
+ * \brief Génère une chaîne de caractères à partir d'un objet Temps au format 12h am-pm
+ *
+ * La chaîne contient les champs heure minute et seconde séparés par un caractère.
+ *
+ * \param[in] le caractère séparateur
+ */
 std::string Temps::formatter12(const std::string separateur) const
 {
 	std::stringstream flux;
@@ -339,9 +348,15 @@ std::string Temps::formatter12(const std::string separateur) const
  *
  */
 
-void Temps::affiche()
+void Temps::affiche() const
 {
 	std::cout << "H: " << m_heure << " M: " << m_minute << " S: " << m_seconde << std::endl;
+}
+
+std::ostream& operator<< (std::ostream& os, const Temps& temps)
+{
+	os << temps.formatter();
+	return os;
 }
 
 

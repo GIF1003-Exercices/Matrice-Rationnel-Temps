@@ -4,6 +4,8 @@
  *  Created on: 2020-10-06
  *      Author: etudiant
  */
+//#define TESTRATIONNEL
+#ifdef TESTRATIONNEL
 
 #include "Rationnel.h"
 #include <iostream>
@@ -43,6 +45,8 @@ int main()
 
 	return 0;
 }
+
+#endif
 
 
 

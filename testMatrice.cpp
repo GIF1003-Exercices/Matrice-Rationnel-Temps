@@ -1,9 +1,12 @@
-/*
- * testMatrice.cpp
+/**
+ * \file testMatrice.cpp
  *
- *  Created on: Oct 6, 2020
- *      Author: etudiant
+ * Contient un petit programme principal destiné à démontrer la surcharge de l'opérateur () dans la classe Matrice
+ *
+ * Created on: Oct 6, 2020
+ * \author: Pascal Charpentier
  */
+
 //#define TESTMATRICE
 #ifdef TESTMATRICE
 
@@ -21,7 +24,7 @@ int main()
     {
     	for (int j = 0; j < NCOLONNES; ++j)
     	{
-    		cout << setw(5) << matrice(i, j);
+    		cout << setw(5) << matrice(i, j); // VoilÀ: on accède aux éléments avec () au lieu de [][]!
     	}
     	cout << endl;
     }

@@ -1,8 +1,9 @@
 /*
- * Rationnel.h
+ * \file Rationnel.h
+ * Contient la classe Rationnel
  *
  *  Created on: Oct 6, 2020
- *      Author: etudiant
+ * \author: Pascal Charpentier
  */
 
 #ifndef RATIONNEL_H_
@@ -10,6 +11,13 @@
 
 #include <iostream>
 #include <string>
+
+/**
+ * \class Rationnel
+ * Classe représentant les nombres rationnels comme une division de deux entiers.  Lorsqu'un objet est construit
+ * il est immédiatement transformé à sa forme irréductible.  Donc, par exemple: 5/10 -> 1/2, ou 3/3 -> 1/1.
+ * Par convention seul le numérateur peut être négatif, et le dénominateur ne peut jamais être nul.
+ */
 
 class Rationnel
 {

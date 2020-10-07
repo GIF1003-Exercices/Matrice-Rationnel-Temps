@@ -55,9 +55,10 @@ public:
 	void avancerUneMinute();
 	void tic();
 
-	void affiche(void);
+	void affiche(void) const ;
 	std::string formatter(const std::string separateur = ":") const;
 	std::string formatter12(const std::string separateur = ":") const;
+	friend std::ostream& operator<< (std::ostream& os, const Temps& temps);
 
 };
 
