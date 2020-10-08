@@ -11,39 +11,57 @@
 #include <string>
 
 /**
- * Trouve le plus grand diviseur commun de a et b avec l'algorithme d'Euclide.
+ * Ordonne deux entiers.  S'ils sont égaux ou déjà en ordre: ne change rien.
+ * Donc à la sortie a > b
  *
  * \param[in] a un entier
  * \param[in] b un autre entier
  *
- * \return un entier, le plus grand commun diviseur de a et b.
+ */
+
+void Rationnel::ordonner(long& a, long& b)
+{
+	if (b > a)
+	{
+		long temp = a;
+		a = b;
+		b = temp;
+	}
+}
+
+/**
+ * Trouve le plus grand diviseur commun de a et b avec l'algorithme d'Euclide.
+ * Retourne toujours une valeur positive, donc on aura le même résultat, soit +6
+ * pour les combinaisons d'arguments suivants: (42, 66) (-42, 66) (42, -66) (-42, -66).
+ *
+ * \param[in] a un entier
+ * \param[in] b un autre entier
+ *
+ * \return un entier, le plus grand commun diviseur de a et b, en valeur absolue.
  *
  * \precondition a et b ne peuvent être simultanément 0
+ *
+ * \postcondition ne peut retourner 0
  *
  * \exception une assertion si a et b sont simultanément nuls.
  */
 
 long Rationnel::pgdc(long a, long b)
 {
+	// Précondition
+
+	assert( (a != 0) or (b != 0) );
+
+	// Cas pathologiques: nombres égaux ou nuls
+
+	if (b == 0) return std::abs(a);
+	if ((a == 0) or (a == b)) return std::abs(b);
+
 	// On ne s'occupe que des nombres positifs
 
     a = std::abs(a);
     b = std::abs(b);
-
-    // Cas pathologiques: nombres égaux ou nuls
-
-    assert( (a != 0) or (b != 0));
-    if ((b == 0) or (a == b)) return a;
-    if (a == 0) return b;
-
-    // Ordonner les deux nombres
-
-    if (b > a)
-    {
-    	long temp = a;
-    	a = b;
-    	b = temp;
-    }
+    Rationnel::ordonner(a, b);
 
     // Algorithme d'Euclide
 
@@ -54,6 +72,10 @@ long Rationnel::pgdc(long a, long b)
     	b = rem;
     	rem = a % b;
     }
+
+    // Postcondition
+
+    assert(b != 0);
     return b;
 }
 
@@ -64,7 +86,7 @@ long Rationnel::pgdc(long a, long b)
  * \param[in] num le numérateur
  * \param[in] denom le dénominateur
  *
- * \precondition denom != 0
+ * \precondition denom > 0
  * \exception assertion si le dénominateur est nul ou le nombre résultant n'est pas irréductible
  * \postcondition un rationnel doit être irréductible, le pgdc du numérateur et dénominateur doit être 1.
  */
@@ -214,7 +236,15 @@ std::string Rationnel::formatter() const
 
 /**
  * Opérateur de redirection dans un flux
+ *
+ * Affiche l'heure sous forme formattée avec 24h par défaut
+ *
+ * \param[in] os stream de sortie dans lequel insérer l'heure
+ * \param[in] r objet Temps à insérer.
+ *
+ * \return le stream de sortie
  */
+
 std::ostream& operator<< (std::ostream& os, const Rationnel& r)
 {
 	os << r.formatter();

@@ -26,8 +26,11 @@ private:
     long denominateur;
 
 public:
+    static void ordonner(long& a, long& b);
 	static long pgdc(long, long);
+
 	bool estValide() const ;
+
 	Rationnel(long, long);
 	Rationnel(long);
 
